@@ -1,5 +1,5 @@
 # BigData_WS_22-23_OpenCell-ID
-Big-Data Projekt zum Thema OpenCell-ID von Marcel Fleck
+## Big-Data Projekt zum Thema OpenCell-ID von Marcel Fleck
 -------------------------------------------------------------------------
 # Vorgehen
 1. Clone Git-Repo
