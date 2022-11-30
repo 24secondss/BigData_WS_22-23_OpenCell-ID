@@ -4,7 +4,7 @@ RUN cd ocid_project && npm install && npm run build
 
 FROM node:16 as BACKEND
 COPY ./backend/ ./backend/
-COPY --from=FRONTEND ./ocid_project/dist/ ./backend/dist/
+COPY --from=FRONTEND ./ocid_project/dist/ocid_project/ ./backend/dist/
 RUN cd backend && npm install
 EXPOSE 3000
 
