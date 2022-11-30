@@ -7,4 +7,4 @@
 3. Execute command: docker-compose up -d
 4. Navigate into Hadoop-Docker-Bash
 5. Execute command: start-all.sh
-6. Open Frontend on <VM-IP-Adress>:3000
+6. Open Frontend on (VM-IP-Adress):3000
