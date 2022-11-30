@@ -1,4 +1,4 @@
-FROM node:16 AS FRONTEND
+FROM node:18 AS FRONTEND
 COPY ./ocid_project/ ./ocid_project/
 RUN cd ocid_project && npm install && npm run build
 

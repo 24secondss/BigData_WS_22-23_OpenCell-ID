@@ -1,37 +1,34 @@
 # -*- coding: utf-8 -*-
 
 """
-Title: Project Dag 
-Author: Marcel Fleck
+Title: OpenCelliD Diff-DAG 
+Author: Marcel Fleck (9611872)
 Description: 
-Dag to create partitioned dbs of diffs and merges them to full db, runs daily
-
-TO DO: Links zu download von diffs changen: https://onedrive.live.com/download?cid=6CD9C3F4D2E50BCB&resid=6CD9C3F4D2E50BCB%2159291&authkey=ANu-4_qT3NxqPqo
-       bei produktiv: original-link mit Accesstoken und OCID-diff-cell-export-{{ ds }}-T000000.csv.gz' hinten fuer richtigen Dateidownload
-       https://opencellid.org/ocid/downloads?token=pk.7f4a4726c75c79ade7fc194ae9fb99c0&type=diff&file=OCID-diff-cell-export-2022-11-29-T000000.csv.gz
+DAG zum Herunterladen von Diff-Dateien von OpenCelliD und verschieben dieser nach HDFS.
+Beinhaltet PySpark-Job zum Verarbeiten der Daten (Partitionieren, Bereinigen) und zum Kopieren der Daten
+zur MariaDB. Dieser DAG läuft ein Mal pro Tag um 6 Uhr morgends.
 """
 
 from datetime import datetime
 from airflow import DAG
-from airflow.operators.dummy_operator import DummyOperator
 from airflow.contrib.operators.spark_submit_operator import SparkSubmitOperator
 from airflow.operators.http_download_operations import HttpDownloadOperator
 from airflow.operators.zip_file_operations import UnzipFileOperator
-from airflow.operators.hdfs_operations import HdfsPutFileOperator, HdfsGetFileOperator, HdfsMkdirFileOperator
+from airflow.operators.hdfs_operations import HdfsPutFileOperator, HdfsMkdirFileOperator
 from airflow.operators.filesystem_operations import CreateDirectoryOperator
 from airflow.operators.filesystem_operations import ClearDirectoryOperator
-from airflow.operators.hive_operator import HiveOperator
 
 args = {
     'owner': 'airflow'
 }
 
-dag = DAG('cell_towers_create_diffs_db', default_args=args, description='DAG to get diff_data from OpenCellID',
-          schedule_interval='56 18 * * *',
-          start_date=datetime(2022, 11, 21), catchup=False, max_active_runs=1)
+dag = DAG('OpenCelliD_diffs_db', default_args=args, description='DAG to get diff_data from OpenCelliD',
+          schedule_interval='00 06 * * *',
+          start_date=datetime(2022, 11, 29), catchup=False, max_active_runs=1) # STARTDATUM ANPASSEN
 
 # ----------- erstellen von Pfaden, download und verschieben von Dateien nach Hadoop ----------
 
+# -- Erstellen eines Verzeichnisses für die täglichen unbearbeiteten DIffs --
 create_local_diff_dir = CreateDirectoryOperator(
     task_id='create_local_diff_dir',
     path='/home/airflow/opencellid/raw',
@@ -39,6 +36,7 @@ create_local_diff_dir = CreateDirectoryOperator(
     dag=dag,
 )
 
+# -- Löschen des Verzeichnises, sodass immer nur die neueste Datei im Ordner liegt --
 clear_local_diff_dir = ClearDirectoryOperator(
     task_id='clear_local_diff_dir',
     directory='/home/airflow/opencellid/raw/diff',
@@ -46,6 +44,7 @@ clear_local_diff_dir = ClearDirectoryOperator(
     dag=dag,
 )
 
+# -- Herunterladen der neuesten Diff-Datei von OpenCelliD --
 download_diff = HttpDownloadOperator(
     task_id='download_diff',
     download_uri='https://opencellid.org/ocid/downloads?token=pk.7f4a4726c75c79ade7fc194ae9fb99c0&type=diff&file=OCID-diff-cell-export-{{ ds }}-T000000.csv.gz',
@@ -53,6 +52,7 @@ download_diff = HttpDownloadOperator(
     dag=dag,
 )
 
+# -- Entpacken der Datei --
 unzip_diff = UnzipFileOperator(
     task_id='unzip_diff',
     zip_file='/home/airflow/opencellid/raw/diff/OCID-diff-cell-export-{{ ds }}-T000000.csv.gz',
@@ -60,6 +60,7 @@ unzip_diff = UnzipFileOperator(
     dag=dag,
 )
 
+# -- Erstellen eines Verzeichnises für unverarbeitete Diffs auf Hadoop --
 create_hdfs_diff_partition_dir = HdfsMkdirFileOperator(
     task_id='create_hdfs_diff_partition_dir',
     directory='/user/hadoop/opencellid/raw/diff',
@@ -67,6 +68,7 @@ create_hdfs_diff_partition_dir = HdfsMkdirFileOperator(
     dag=dag,
 )
 
+# -- Erstellen eines Verzeichnises für bearbeitete Diffs auf Hadoop --
 create_hdfs_diff_partition_dir = HdfsMkdirFileOperator(
     task_id='create_hdfs_diff_partition_dir',
     directory='/user/hadoop/opencellid/final/diff',
@@ -74,6 +76,7 @@ create_hdfs_diff_partition_dir = HdfsMkdirFileOperator(
     dag=dag,
 )
 
+# -- Verschieben der Diff-Dateien auf HDFS --
 hdfs_put_tower_cells = HdfsPutFileOperator(
     task_id='hdfs_put_tower_cells',
     local_file='/home/airflow/opencellid/raw/diff/OCID-diff-cell-export-{{ ds }}-T000000.csv',
@@ -84,6 +87,7 @@ hdfs_put_tower_cells = HdfsPutFileOperator(
 
 # ---------------------------------------------------------------------------------------------
 
+# -- PySpark-Job zum Verarbeiten der Diff-raw-Daten und verschieben der bearbeiteten Daten zur MariaDB --
 pyspark_raw_to_final_diffs_parquet = SparkSubmitOperator(
     task_id='pyspark_raw_to_final_diffs_parquet',
     conn_id='spark',
