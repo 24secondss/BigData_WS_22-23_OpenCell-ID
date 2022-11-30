@@ -9,7 +9,7 @@ async function queryDatabase(statement, response) {
   try {
     console.log("Beginn Connection");
     mariadb.createConnection({
-      host: "35.204.79.5",
+      host: "mariaDB",
      port: "3306", 
      user: "root", 
      password: "root",
