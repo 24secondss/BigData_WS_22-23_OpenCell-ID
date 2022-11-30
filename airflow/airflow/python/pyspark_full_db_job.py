@@ -97,14 +97,3 @@ partition_LTE.write.format('jdbc').options(
     user='root',
     password='root'
 ).mode('overwrite').save()
-
-
-# # connect and write data to end user db (mariaDB)
-# relevant_full_cell_towers_db.write.format('jdbc').options(
-#     url='jdbc:mysql://mariaDB:3306/ocid_cell_tower?permitMysqlScheme',
-#     driver='org.mariadb.jdbc.Driver',
-#     dbtable='ocid_cell_tower',
-#     user='root',
-#     password='root'
-# ).mode('overwrite').save()
-

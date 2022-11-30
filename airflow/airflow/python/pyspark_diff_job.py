@@ -54,19 +54,46 @@ full_cell_towers_db = spark.read.format("csv").options(
 
 # filter relevant columns
 # We only need radiotype, latitude, longitude, range and averageSignal for Task
-relevant_full_cell_towers_db = full_cell_towers_db.select("radio", "lat", "lon", "range", "averageSignal")
+relevant_full_cell_towers_db = full_cell_towers_db.select("radio", "lat", "lon", "range").filter(full_cell_towers_db.radio != "NR")
 relevant_full_cell_towers_db = relevant_full_cell_towers_db.dropna()
 
 # partition by radio-type and write to HDFS
 relevant_full_cell_towers_db.repartition('radio').write.format("parquet").mode("append").option(
-        "path", args.hdfs_target_dir).partitionBy("radio").saveAsTable("default.lat_lon_range")
+        "path", args.hdfs_target_dir).partitionBy("radio").saveAsTable("fulltable_lat_lon_range")
 
-# connect and write data to end user db (mariaDB)
-relevant_full_cell_towers_db.write.format('jdbc').options(
+
+partition_GSM = spark.read.parquet(args.hdfs_target_dir + "/radio=GSM")
+partition_GSM.write.format('jdbc').options(
     url='jdbc:mysql://mariaDB:3306/ocid_cell_tower?permitMysqlScheme',
     driver='org.mariadb.jdbc.Driver',
-    dbtable='ocid_cell_tower',
+    dbtable='partition_GSM',
     user='root',
     password='root'
 ).mode('append').save()
 
+partition_UMTS = spark.read.parquet(args.hdfs_target_dir + "/radio=UMTS")
+partition_UMTS.write.format('jdbc').options(
+    url='jdbc:mysql://mariaDB:3306/ocid_cell_tower?permitMysqlScheme',
+    driver='org.mariadb.jdbc.Driver',
+    dbtable='partition_UMTS',
+    user='root',
+    password='root'
+).mode('append').save()
+
+partition_CDMA = spark.read.parquet(args.hdfs_target_dir + "/radio=CDMA")
+partition_CDMA.write.format('jdbc').options(
+    url='jdbc:mysql://mariaDB:3306/ocid_cell_tower?permitMysqlScheme',
+    driver='org.mariadb.jdbc.Driver',
+    dbtable='partition_CDMA',
+    user='root',
+    password='root'
+).mode('append').save()
+
+partition_LTE = spark.read.parquet(args.hdfs_target_dir + "/radio=LTE")
+partition_LTE.write.format('jdbc').options(
+    url='jdbc:mysql://mariaDB:3306/ocid_cell_tower?permitMysqlScheme',
+    driver='org.mariadb.jdbc.Driver',
+    dbtable='partition_LTE',
+    user='root',
+    password='root'
+).mode('append').save()
