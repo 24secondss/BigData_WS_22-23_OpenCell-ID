@@ -8,4 +8,4 @@ COPY --from=FRONTEND ./ocid_project/dist/ ./backend/dist/
 RUN cd backend && npm install
 EXPOSE 3000
 
-RUN node ./backend/backend.js
+CMD [ "node", "./backend/backend.js" ]
