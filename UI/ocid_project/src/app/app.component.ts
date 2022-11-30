@@ -26,7 +26,7 @@ export class AppComponent {
     const radioSignal = ["GSM","UMTS","CDMA","LTE"]; 
     for(let i in radioSignal){
       this.result = this.result.concat(
-        await fetch("http://localhost:3000/"+ this.longitude + "/" + this.latitude + "/" + radioSignal[i]) //http://"+ self.location.host +
+        await fetch("http://"+ self.location.host + "/" + this.longitude + "/" + this.latitude + "/" + radioSignal[i])
         .then(response => response.json())
         .then(queryResult =>  {
           if (queryResult.queryResult.length > 0){
