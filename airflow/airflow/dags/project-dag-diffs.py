@@ -48,7 +48,7 @@ clear_local_diff_dir = ClearDirectoryOperator(
 
 download_diff = HttpDownloadOperator(
     task_id='download_diff',
-    download_uri='https://opencellid.org/ocid/downloads?token=pk.7f4a4726c75c79ade7fc194ae9fb99c0&type=diff&file=OCID-diff-cell-export-{{ ds }}-T000000.csv.gz'.format(API_KEY),
+    download_uri='https://opencellid.org/ocid/downloads?token=pk.7f4a4726c75c79ade7fc194ae9fb99c0&type=diff&file=OCID-diff-cell-export-{{ ds }}-T000000.csv.gz',
     save_to='/home/airflow/opencellid/raw/diff/OCID-diff-cell-export-{{ ds }}-T000000.csv.gz',
     dag=dag,
 )
