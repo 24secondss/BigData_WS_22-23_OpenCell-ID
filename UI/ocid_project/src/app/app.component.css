@@ -1,0 +1,80 @@
+.body {
+    background-image: url(https://www.ingenieur.de/wp-content/uploads/2020/11/Weltall-e1604573291664-980x490.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7%; 
+    border: thin solid black;
+    backdrop-filter: blur(10px);
+}
+
+.blurred {
+    backdrop-filter: blur(5px);
+}
+
+.description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5%;
+    margin-top: 1%;
+}
+
+.input_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    margin-top: 4%;
+    margin-bottom: 5%;
+}
+
+.input_parts {
+    margin: 1%;
+}
+
+.input_button {
+    margin: 4%;
+}
+
+.output_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    margin-top: -1%;
+}
+
+.output_div_always {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    margin-top: -1%;
+    width: 50%;
+}
+
+.output_div_afterQuery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    margin-top: -1%;
+    width: 50%;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7%; 
+    border: thin solid black;
+    backdrop-filter: blur(10px);
+    margin-top: 16.45%;
+}

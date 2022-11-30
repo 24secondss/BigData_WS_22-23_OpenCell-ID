@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title> OpenCellID_Big_Data-Project </title>
+  </head>
+  <body class="body">
+    <div class="blurred">
+      <div class="header">
+        <p> <b> OpenCell-ID -- Big Data-Project </b> </p>
+      </div>
+      <div class="description">
+        Mit Angabe von Longitude und Latitude kann die Signalstärke an der gegeben Position für untenstehende Radio-Typen angezeigt werden. 
+      </div>
+
+      <div class="input_div"> 
+        <!-- Inputfield for Longitude -->
+        <mat-form-field class="example-form-field">
+          <mat-label>Longitude</mat-label>
+          <input matInput type="text" [(ngModel)]="longitude">
+          <button *ngIf="longitude" matSuffix mat-icon-button aria-label="Clear" (click)="longitude=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <!-- Inputfield for Latitude -->
+        <mat-form-field class="example-form-field, input_parts">
+          <mat-label>Latitude</mat-label>
+          <input matInput type="text" [(ngModel)]="latitude">
+          <button *ngIf="latitude" matSuffix mat-icon-button aria-label="Clear" (click)="latitude=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <!-- Button to execute SQL-Query -->
+        <div style="margin-top: -1%;">
+          <button mat-raised-button color="accent" (click)="query()">Request</button>
+        </div>
+      </div>
+      <div class="output_div">
+        <div class="output_div_always">
+          <mat-list role="list">
+            <mat-list-item role="listitem">GSM: </mat-list-item>
+            <mat-list-item role="listitem">UMTS: </mat-list-item>
+            <mat-list-item role="listitem">CDMA: </mat-list-item>
+            <mat-list-item role="listitem">LTE: </mat-list-item>
+          </mat-list>
+        </div>
+        <div class="output_div_afterQuery">
+          <mat-list role="list">
+            <mat-list-item role="listitem">{{ GSM }} </mat-list-item>
+            <mat-list-item role="listitem">{{ UMTS }} </mat-list-item>
+            <mat-list-item role="listitem">{{ CDMA }}</mat-list-item>
+            <mat-list-item role="listitem">{{ LTE }}</mat-list-item>
+          </mat-list>
+          <div style="margin-left: 10%;">
+            <mat-spinner *ngIf="((GSM == '' || UMTS == '' || CDMA == '' || LTE == '') && spin == 'true')"></mat-spinner>
+          </div>
+        </div>
+      </div> 
+      <footer class="footer">
+        <p style="color: #926758;"> Marcel Fleck </p>
+      </footer> 
+    </div>
+  </body>
+</html>
