@@ -46,7 +46,7 @@ services:
       image: node:16
       container_name: UI
       build:
-        context: ./UI
+        context: ./UserInterface
         dockerfile: Dockerfile
       ports:
         - "3000:3000"
