@@ -29,8 +29,7 @@ export class AppComponent {
         await fetch("http://"+ self.location.host + "/" + this.longitude + "/" + this.latitude + "/" + radioSignal[i])
         .then(response => response.json())
         .then(queryResult =>  {
-          console.log(queryResult);
-          if (queryResult.queryResult.length > 0 && queryResult.queryResult[0].avgRange != null){
+          if (queryResult.queryResult.avgRange != null){
             console.log("QueryResutl Frontend");
             console.log(queryResult.queryResult);
             return queryResult.queryResult;
@@ -48,7 +47,7 @@ export class AppComponent {
         else if (this.result[0].avgRange <= 1500){
           this.GSM = "medium";
         }
-        else if(this.result[0].avgRange = "None"){
+        else if(this.result[0].avgRange == "None"){
           this.GSM = "None";
         }
         else {
@@ -62,7 +61,7 @@ export class AppComponent {
         else if (this.result[1].avgRange <= 1500){
           this.UMTS = "medium";
         }
-        else if(this.result[1].avgRange = "None"){
+        else if(this.result[1].avgRange == "None"){
           this.UMTS = "None";
         }
         else {
@@ -76,7 +75,7 @@ export class AppComponent {
         else if (this.result[2].avgRange <= 1500){
           this.CDMA = "medium";
         }
-        else if(this.result[2].avgRange = "None"){
+        else if(this.result[2].avgRange == "None"){
           this.CDMA = "None";
         }
         else {
@@ -90,7 +89,7 @@ export class AppComponent {
         else if (this.result[3].avgRange <= 1500){
           this.LTE = "medium";
         }
-        else if(this.result[3].avgRange = "None"){
+        else if(this.result[3].avgRange == "None"){
           this.LTE = "None";
         }
         else {
