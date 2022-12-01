@@ -37,10 +37,10 @@ export class AppComponent {
           }
         }));
       if (radioSignal[i] == "GSM") {
-        if(this.result[0].range <= 2000){
+        if(this.result[0].range <= 1000){
           this.GSM = "poor";
         }
-        else if (this.result[0].range <= 3000){
+        else if (this.result[0].range <= 1500){
           this.GSM = "medium";
         }
         else if(this.result[0].range = "None"){
@@ -51,10 +51,10 @@ export class AppComponent {
         }
       }
       if (radioSignal[i] == "UMTS") {
-        if(this.result[1].range <= 2000){
+        if(this.result[1].range <= 1000){
           this.UMTS = "poor";
         }
-        else if (this.result[1].range <= 3000){
+        else if (this.result[1].range <= 1500){
           this.UMTS = "medium";
         }
         else if(this.result[1].range = "None"){
@@ -65,10 +65,10 @@ export class AppComponent {
         }
       }
       if (radioSignal[i] == "CDMA") {
-        if(this.result[2].range <= 2000){
+        if(this.result[2].range <= 1000){
           this.CDMA = "poor";
         }
-        else if (this.result[2].range <= 3000){
+        else if (this.result[2].range <= 1500){
           this.CDMA = "medium";
         }
         else if(this.result[2].range = "None"){
@@ -79,10 +79,10 @@ export class AppComponent {
         }
       }
       if (radioSignal[i] == "LTE") {
-        if(this.result[3].range <= 2000){
+        if(this.result[3].range <= 1000){
           this.LTE = "poor";
         }
-        else if (this.result[3].range <= 3000){
+        else if (this.result[3].range <= 1500){
           this.LTE = "medium";
         }
         else if(this.result[3].range = "None"){
