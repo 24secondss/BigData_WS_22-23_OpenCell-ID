@@ -42,58 +42,58 @@ export class AppComponent {
         }));
       if (radioSignal[i] == "GSM") {
         if(this.result[0].avgRange <= 1000){
-          this.GSM = "poor";
+          this.GSM = "Poor";
         }
         else if (this.result[0].avgRange <= 1500){
-          this.GSM = "medium";
+          this.GSM = "Medium";
         }
         else if(this.result[0].avgRange == "None"){
           this.GSM = "None";
         }
         else {
-          this.GSM = "great";
+          this.GSM = "Great";
         }
       }
       if (radioSignal[i] == "UMTS") {
         if(this.result[1].avgRange <= 1000){
-          this.UMTS = "poor";
+          this.UMTS = "Poor";
         }
         else if (this.result[1].avgRange <= 1500){
-          this.UMTS = "medium";
+          this.UMTS = "Medium";
         }
         else if(this.result[1].avgRange == "None"){
           this.UMTS = "None";
         }
         else {
-          this.UMTS = "great";
+          this.UMTS = "Great";
         }
       }
       if (radioSignal[i] == "CDMA") {
         if(this.result[2].avgRange <= 1000){
-          this.CDMA = "poor";
+          this.CDMA = "Poor";
         }
         else if (this.result[2].avgRange <= 1500){
-          this.CDMA = "medium";
+          this.CDMA = "Medium";
         }
         else if(this.result[2].avgRange == "None"){
           this.CDMA = "None";
         }
         else {
-          this.CDMA = "great";
+          this.CDMA = "Great";
         }
       }
       if (radioSignal[i] == "LTE") {
         if(this.result[3].avgRange <= 1000){
-          this.LTE = "poor";
+          this.LTE = "Poor";
         }
         else if (this.result[3].avgRange <= 1500){
-          this.LTE = "medium";
+          this.LTE = "Medium";
         }
         else if(this.result[3].avgRange == "None"){
           this.LTE = "None";
         }
         else {
-          this.LTE = "great";
+          this.LTE = "Great";
         }
       }
     };
