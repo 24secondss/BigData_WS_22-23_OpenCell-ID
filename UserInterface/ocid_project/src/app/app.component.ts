@@ -33,17 +33,17 @@ export class AppComponent {
             return queryResult.queryResult;
           }
           else {
-            return { radio: radioSignal[i], range: "None" }
+            return { radio: radioSignal[i], avgRange: "None" }
           }
         }));
       if (radioSignal[i] == "GSM") {
-        if(this.result[0].range <= 1000){
+        if(this.result[0].avgRange <= 1000){
           this.GSM = "poor";
         }
-        else if (this.result[0].range <= 1500){
+        else if (this.result[0].avgRange <= 1500){
           this.GSM = "medium";
         }
-        else if(this.result[0].range = "None"){
+        else if(this.result[0].avgRange = "None"){
           this.GSM = "None";
         }
         else {
@@ -51,13 +51,13 @@ export class AppComponent {
         }
       }
       if (radioSignal[i] == "UMTS") {
-        if(this.result[1].range <= 1000){
+        if(this.result[1].avgRange <= 1000){
           this.UMTS = "poor";
         }
-        else if (this.result[1].range <= 1500){
+        else if (this.result[1].avgRange <= 1500){
           this.UMTS = "medium";
         }
-        else if(this.result[1].range = "None"){
+        else if(this.result[1].avgRange = "None"){
           this.UMTS = "None";
         }
         else {
@@ -65,13 +65,13 @@ export class AppComponent {
         }
       }
       if (radioSignal[i] == "CDMA") {
-        if(this.result[2].range <= 1000){
+        if(this.result[2].avgRange <= 1000){
           this.CDMA = "poor";
         }
-        else if (this.result[2].range <= 1500){
+        else if (this.result[2].avgRange <= 1500){
           this.CDMA = "medium";
         }
-        else if(this.result[2].range = "None"){
+        else if(this.result[2].avgRange = "None"){
           this.CDMA = "None";
         }
         else {
@@ -79,13 +79,13 @@ export class AppComponent {
         }
       }
       if (radioSignal[i] == "LTE") {
-        if(this.result[3].range <= 1000){
+        if(this.result[3].avgRange <= 1000){
           this.LTE = "poor";
         }
-        else if (this.result[3].range <= 1500){
+        else if (this.result[3].avgRange <= 1500){
           this.LTE = "medium";
         }
-        else if(this.result[3].range = "None"){
+        else if(this.result[3].avgRange = "None"){
           this.LTE = "None";
         }
         else {
