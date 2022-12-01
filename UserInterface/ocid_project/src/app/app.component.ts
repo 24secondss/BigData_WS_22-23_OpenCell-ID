@@ -29,13 +29,13 @@ export class AppComponent {
         await fetch("http://"+ self.location.host + "/" + this.longitude + "/" + this.latitude + "/" + radioSignal[i])
         .then(response => response.json())
         .then(queryResult =>  {
-          if (queryResult.queryResult.length > 0){
+          if (queryResult.queryResult.avgRange != null){
             console.log("QueryResutl Frontend");
             console.log(queryResult.queryResult);
             return queryResult.queryResult;
           }
           else {
-            console.log("QueryResutl Frontend");
+            console.log("QueryResutl was null");
             console.log(queryResult.queryResult);
             return { avgRange: "None" }
           }
