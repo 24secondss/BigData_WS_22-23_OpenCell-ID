@@ -6,7 +6,7 @@ Author: Marcel Fleck (9611872)
 Description: 
 DAG zum Herunterladen von Diff-Dateien von OpenCelliD und verschieben dieser nach HDFS.
 Beinhaltet PySpark-Job zum Verarbeiten der Daten (Partitionieren, Bereinigen) und zum Kopieren der Daten
-zur MariaDB. Dieser DAG läuft ein Mal pro Tag um 6 Uhr morgends.
+zur MariaDB. Dieser DAG läuft ein Mal pro Tag um 6 Uhr morgens.
 """
 
 from datetime import datetime
@@ -16,7 +16,6 @@ from airflow.operators.http_download_operations import HttpDownloadOperator
 from airflow.operators.zip_file_operations import UnzipFileOperator
 from airflow.operators.hdfs_operations import HdfsPutFileOperator, HdfsMkdirFileOperator
 from airflow.operators.filesystem_operations import CreateDirectoryOperator
-from airflow.operators.filesystem_operations import ClearDirectoryOperator
 
 args = {
     'owner': 'airflow'
@@ -24,7 +23,7 @@ args = {
 
 dag = DAG('OpenCelliD_diffs_db', default_args=args, description='DAG to get diff_data from OpenCelliD',
           schedule_interval='00 06 * * *',
-          start_date=datetime(2022, 11, 29), catchup=False, max_active_runs=1) # STARTDATUM ANPASSEN
+          start_date=datetime(2022, 12, 1), catchup=False, max_active_runs=1)
 
 # ----------- erstellen von Pfaden, download und verschieben von Dateien nach Hadoop ----------
 
@@ -33,14 +32,6 @@ create_local_diff_dir = CreateDirectoryOperator(
     task_id='create_local_diff_dir',
     path='/home/airflow/opencellid/raw',
     directory='diff',
-    dag=dag,
-)
-
-# -- Löschen des Verzeichnises, sodass immer nur die neueste Datei im Ordner liegt --
-clear_local_diff_dir = ClearDirectoryOperator(
-    task_id='clear_local_diff_dir',
-    directory='/home/airflow/opencellid/raw/diff',
-    pattern='*',
     dag=dag,
 )
 
@@ -108,13 +99,11 @@ pyspark_raw_to_final_diffs_parquet = SparkSubmitOperator(
     dag=dag
 )
 
-
 # -------------------- Ausfuerung/Dag-Ablauf --------------------
-create_local_diff_dir >> clear_local_diff_dir >> download_diff >> unzip_diff
+create_local_diff_dir >> download_diff >> unzip_diff
 create_hdfs_diff_partition_dir
 
 unzip_diff >> hdfs_put_tower_cells
 
 hdfs_put_tower_cells >> pyspark_raw_to_final_diffs_parquet
-
 # ---------------------------------------------------------------

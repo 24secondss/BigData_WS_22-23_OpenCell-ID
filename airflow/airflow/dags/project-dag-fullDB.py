@@ -22,7 +22,7 @@ args = {
 }
 
 dag = DAG('OpenCelliD_full_db', default_args=args, description='DAG to get full_db Data from OpenCelliD',
-          schedule_interval='@once', start_date=datetime(2022, 11, 29), # STARTDATUM ANPASSEN
+          schedule_interval='@once', start_date=datetime(2022, 12, 1),
           catchup=False, max_active_runs=1)
 
 # ----------- erstellen von Pfaden, download und verschieben von Dateien nach Hadoop ----------
@@ -114,3 +114,4 @@ create_local_import_dir_2 >> download_cell_towers >> unzip_cell_towers >> hdfs_p
 
 hdfs_put_tower_cells >> pyspark_raw_to_final_fullDB_parquet
 # ---------------------------------------------------------------
+
