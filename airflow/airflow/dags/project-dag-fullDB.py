@@ -109,7 +109,7 @@ pyspark_raw_to_final_fullDB_parquet = SparkSubmitOperator(
 
 # -------------------- Ausfuerung/Dag-Ablauf --------------------
 create_local_import_dir >> create_local_import_dir_2 
-create_local_import_dir_2 >> create_hdfs_cell_towers_raw_dir >> create_hdfs_cell_towers_final_dir
+create_hdfs_cell_towers_raw_dir >> create_hdfs_cell_towers_final_dir
 create_local_import_dir_2 >> download_cell_towers >> unzip_cell_towers >> hdfs_put_tower_cells
 
 hdfs_put_tower_cells >> pyspark_raw_to_final_fullDB_parquet
