@@ -43,7 +43,7 @@ async function queryDatabase(statement, response) {
 app.use(express.static('/backend/dist'));
 app.use(cors());
 app.get('/:longitude/:latitude/:radio', function(req, res) {
-    let sqlQueryStatement = `SELECT AVG(partition_${req.params.radio}.range) FROM partition_${req.params.radio} WHERE lon <= (${req.params.longitude} + 1) AND lon >= (${req.params.longitude} - 1) AND lat <= (${req.params.latitude} + 1) AND lat >= (${req.params.latitude} - 1);`; 
+    let sqlQueryStatement = `SELECT AVG(partition_${req.params.radio}.range) as range FROM partition_${req.params.radio} WHERE lon <= (${req.params.longitude} + 1) AND lon >= (${req.params.longitude} - 1) AND lat <= (${req.params.latitude} + 1) AND lat >= (${req.params.latitude} - 1);`; 
     queryDatabase(sqlQueryStatement, res);
   });
 
