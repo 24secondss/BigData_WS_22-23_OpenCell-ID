@@ -46,7 +46,7 @@ create_local_import_dir_2 = CreateDirectoryOperator(
 # -- Herunterladen der gesamten Datenbank von OpenCelliD --
 download_cell_towers = HttpDownloadOperator(
     task_id='download_cell_towers',
-    download_uri='https://opencellid.org/ocid/downloads?token=pk.7f4a4726c75c79ade7fc194ae9fb99c0&type=full&file=cell_towers.csv.gz', 
+    download_uri='https://onedrive.live.com/download?cid=6CD9C3F4D2E50BCB&resid=6CD9C3F4D2E50BCB%2159290&authkey=AMinp5rC36d7X4k', #https://opencellid.org/ocid/downloads?token=pk.7f4a4726c75c79ade7fc194ae9fb99c0&type=full&file=cell_towers.csv.gz
     save_to='/home/airflow/opencellid/raw/cell_towers.csv.gz',
     dag=dag,
 )
