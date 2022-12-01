@@ -2,6 +2,12 @@
 ## Big-Data Projekt zum Thema OpenCell-ID von Marcel Fleck
 -------------------------------------------------------------------------
 # How to start the complete Process
+
+All of the steps below assume a VM with Docker already installed. 
+Instructions for this installation can be found here: https://github.com/marcelmittelstaedt/BigData/blob/master/slides/winter_semester_2022-2023/1_Distributed-Systems_Data-Models_and_Access.pdf (Page 80)
+
+Further, the docker-compose package must be installed. This can be done with the following command: ```sudo apt install docker-compose```
+
 ## First clone this repo
 - Clone Git-Repo: ```git clone https://github.com/24secondss/BigData_WS_22-23_OpenCell-ID.git ```
 - Navigate into Git-Folder: ```cd BigData_WS_22-23_OpenCell-ID/ ```
