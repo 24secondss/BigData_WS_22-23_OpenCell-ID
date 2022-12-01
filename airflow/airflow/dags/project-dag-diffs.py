@@ -68,8 +68,8 @@ create_hdfs_diff_partition_dir = HdfsMkdirFileOperator(
 )
 
 # -- Verschieben der Diff-Dateien auf HDFS --
-hdfs_put_tower_cells = HdfsPutFileOperator(
-    task_id='hdfs_put_tower_cells',
+hdfs_put_diffs = HdfsPutFileOperator(
+    task_id='hdfs_put_diffs',
     local_file='/home/airflow/opencellid/raw/diff/OCID-diff-cell-export-{{ ds }}-T000000.csv',
     remote_file='/user/hadoop/opencellid/raw/diff/OCID-diff-cell-export-{{ ds }}-T000000.csv',
     hdfs_conn_id='hdfs',
@@ -103,7 +103,7 @@ pyspark_raw_to_final_diffs_parquet = SparkSubmitOperator(
 create_local_diff_dir >> download_diff >> unzip_diff
 create_hdfs_diff_partition_dir
 
-unzip_diff >> hdfs_put_tower_cells
+unzip_diff >> hdfs_put_diffs
 
-hdfs_put_tower_cells >> pyspark_raw_to_final_diffs_parquet
+hdfs_put_diffs >> pyspark_raw_to_final_diffs_parquet
 # ---------------------------------------------------------------
