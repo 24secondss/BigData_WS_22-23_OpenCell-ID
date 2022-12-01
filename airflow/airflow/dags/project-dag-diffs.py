@@ -52,17 +52,9 @@ unzip_diff = UnzipFileOperator(
 )
 
 # -- Erstellen eines Verzeichnises für unverarbeitete Diffs auf Hadoop --
-create_hdfs_diff_partition_dir = HdfsMkdirFileOperator(
+create_hdfs_diff_partition_dir_raw = HdfsMkdirFileOperator(
     task_id='create_hdfs_diff_partition_dir',
     directory='/user/hadoop/opencellid/raw/diff',
-    hdfs_conn_id='hdfs',
-    dag=dag,
-)
-
-# -- Erstellen eines Verzeichnises für bearbeitete Diffs auf Hadoop --
-create_hdfs_diff_partition_dir = HdfsMkdirFileOperator(
-    task_id='create_hdfs_diff_partition_dir',
-    directory='/user/hadoop/opencellid/final/diff',
     hdfs_conn_id='hdfs',
     dag=dag,
 )
@@ -101,7 +93,7 @@ pyspark_raw_to_final_diffs_parquet = SparkSubmitOperator(
 
 # -------------------- Ausfuerung/Dag-Ablauf --------------------
 create_local_diff_dir >> download_diff >> unzip_diff
-create_hdfs_diff_partition_dir
+create_hdfs_diff_partition_dir_raw
 
 unzip_diff >> hdfs_put_diffs
 
