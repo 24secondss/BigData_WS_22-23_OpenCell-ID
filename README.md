@@ -1,6 +1,9 @@
 # BigData_WS_22-23_OpenCell-ID
 ## Big-Data Projekt zum Thema OpenCell-ID von Marcel Fleck
--------------------------------------------------------------------------
+---
+# IMPORTANT
+OpenCelliD only allows two donwloads from the same Api-Token per day. With the current implementation the DAGs will fail if triggered more than twice a day!
+---
 # How to start the complete Process
 
 All of the steps below assume a VM with Docker already installed. 
