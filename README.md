@@ -27,6 +27,7 @@ Further, the docker-compose package must be installed. This can be done with the
 - Unpause DAG "OpenCelliD_full_db" by clicking the icon left of the name
 - Wait until this one is done
 - Unpause DAG "OpenCelliD_diffs_db"
+After that, the "OpenCelliD_diffs_db"-DAG runs automatically every morning at 6 am if the VM is running!
 
 ## Frontend
 After the initial DAG is done, you can operate on the Website without errors
