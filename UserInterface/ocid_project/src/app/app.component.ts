@@ -35,7 +35,9 @@ export class AppComponent {
             return queryResult.queryResult;
           }
           else {
-            return { radio: radioSignal[i], avgRange: "None" }
+            console.log("QueryResutl Frontend");
+            console.log(queryResult.queryResult);
+            return { avgRange: "None" }
           }
         }));
       if (radioSignal[i] == "GSM") {
@@ -49,7 +51,7 @@ export class AppComponent {
           this.GSM = "None";
         }
         else {
-          this.UMTS = "great";
+          this.GSM = "great";
         }
       }
       if (radioSignal[i] == "UMTS") {
