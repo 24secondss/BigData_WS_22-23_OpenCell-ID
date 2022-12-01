@@ -30,6 +30,8 @@ export class AppComponent {
         .then(response => response.json())
         .then(queryResult =>  {
           if (queryResult.queryResult.length > 0){
+            console.log("QueryResutl Frontend");
+            console.log(queryResult.queryResult);
             return queryResult.queryResult;
           }
           else {
