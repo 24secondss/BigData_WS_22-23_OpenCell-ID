@@ -35,3 +35,5 @@ After the initial DAG is done, you can operate on the Website without errors
   - Open Frontend on [VM's external IP-Adress]:3000
   - Fill inputfields with desired longitute and latitude
   - Wait until all results are displayed
+  
+Herefore its important, that the Port 3000 is open via the firewall-settings for your gcloud vm!
